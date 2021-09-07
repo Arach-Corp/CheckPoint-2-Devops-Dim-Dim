@@ -9,13 +9,14 @@ header{
     margin-top: 1%;
 }
 section{
-    margin-top: 5%;
+    margin-top: 1%;
     text-align: center;
 }
-*{
-    margin: 0;
-    padding: 0;
+.imagem-logo{
+    width: 150px;
+    height: 150px;
 }
+
 .card-movimentacao{
     display: flex;
     flex-direction: row;
@@ -40,6 +41,20 @@ section{
     text-align: justify;
 }
 .card-movimentacao-date{
-text-align: right;
-margin-top: 15px;
+    text-align: right;
+    margin-top: 15px;
+}
+*{
+    margin: 0;
+    padding: 0;
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+    margin-top: 1.5%;
+}
+form > button{
+    margin-top: 20px;
+    border-radius: 7px;
 }
