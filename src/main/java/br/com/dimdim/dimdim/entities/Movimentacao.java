@@ -21,7 +21,7 @@ public class Movimentacao {
     @Column(name = "ds_movimentacao", length = 80)
     private String descricao;
 
-    @Column(name = "vl_movimentacao", scale = 4, precision = 20)
+    @Column(name = "vl_movimentacao", scale = 2, precision = 20)
     private BigDecimal valor;
 
     @CreationTimestamp

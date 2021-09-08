@@ -53,7 +53,7 @@
                         <th scope="row"><a th:href="@{/usuarios/{id}(id=${user.id})}" th:text="${user.id}"></a></th>
                         <td th:text="${user.nome}"/>
                         <td th:text="${user.email}"/>
-                        <td th:text="${user.saldo}"/>
+                        <td th:text="${user.saldo}" th:class="${user.saldo > 0} ? text-success : text-danger"/>
                         <td th:text="${#temporals.format(user.dataCadastro, 'dd/MM/yyyy HH:mm:ss', new java.util.Locale('pt', 'BR'))}"/>
                         <td><a href="#">Ver movimentações</a></td>
                     </tr>
