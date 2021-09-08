@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>DimDim - Register</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    </head>
+    <body>
+        <header>
+            <nav class="navbar navbar-dark bg-dark">
+                <a class="navbar-brand" href="/home">
+                    <img th:src="@{img/dimdim-icon.png}" width="30" height="30">
+                    DimDim
+                </a>
+            </nav>
+        </header>
+
+        <div class="container mt-3">
+            <form th:object="${registerForm}" method="post" class="mb-3">
+                <div class="form-group mb-1">
+                    <label for="name">Nome</label>
+                    <input id="name" name="name" class="form-control" type="teext" th:field="*{name}" required placeholder="Insira um nome">
+                </div>
+                <div class="form-group mb-1">
+                    <label for="email">Email</label>
+                    <input id="email" name="email" class="form-control" type="email" th:field="*{email}" required placeholder="Insira um email">
+                </div>
+
+                <div class="form-group mb-1">
+                    <label for="password">Senha</label>
+                    <input id="password" name="password" class="form-control" type="password" th:field="*{password}" required placeholder="Insira uma senha">
+                </div>
+
+                <button type="submit" class="btn btn-outline-warning mb-1">Cadastrar-se</button>
+            </form>
+            <hr />
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Nome</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Saldo</th>
+                        <th scope="col">Data cadastro</th>
+                        <th scope="col">Movimentações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="user : ${users.content}">
+                        <th scope="row"><a th:href="@{/usuarios/{id}(id=${user.id})}" th:text="${user.id}"></a></th>
+                        <td th:text="${user.nome}"/>
+                        <td th:text="${user.email}"/>
+                        <td th:text="${user.saldo}"/>
+                        <td th:text="${#temporals.format(user.dataCadastro, 'dd/MM/yyyy HH:mm:ss', new java.util.Locale('pt', 'BR'))}"/>
+                        <td><a href="#">Ver movimentações</a></td>
+                    </tr>
+                </tbody>
+            </table>
+            <nav th:if="${users.totalPages > 0}">
+                <ul class="pagination">
+                    <li class="page-item" th:each="pageNumber: ${pageNumbers}">
+                        <a class="page-link" th:href="@{/usuarios(size=${users.size}, page=${pageNumber - 1})}"
+                           th:text=${pageNumber}
+                           th:classappend="${pageNumber==users.number + 1} ? active"></a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </body>
+</html>
