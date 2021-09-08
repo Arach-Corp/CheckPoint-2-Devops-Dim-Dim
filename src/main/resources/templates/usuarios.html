@@ -12,12 +12,11 @@
         <header>
             <nav class="navbar navbar-dark bg-dark">
                 <a class="navbar-brand" href="/">
-                    <img th:src="@{img/dimdim-icon.png}" width="30" height="30">
+                    <img th:src="@{/img/dimdim-icon.png}" width="30" height="30">
                     DimDim
                 </a>
-                <a class="navbar-brand" href="/usuarios">
-                    Usuários
-                </a>
+                <a class="navbar-brand" href="/">Home</a>
+                <a class="navbar-brand" href="/usuarios">Usuários</a>
             </nav>
         </header>
 
@@ -37,7 +36,7 @@
                     <input id="password" name="password" class="form-control" type="password" th:field="*{password}" required placeholder="Insira uma senha">
                 </div>
 
-                <button type="submit" class="btn btn-outline-warning mb-1">Cadastrar-se</button>
+                <button type="submit" class="btn btn-outline-warning mb-1">Cadastrar</button>
             </form>
             <hr />
             <table class="table">
@@ -56,9 +55,9 @@
                         <th scope="row"><a th:href="@{/usuarios/{id}(id=${user.id})}" th:text="${user.id}"></a></th>
                         <td th:text="${user.nome}"/>
                         <td th:text="${user.email}"/>
-                        <td th:text="${user.saldo}" th:class="${user.saldo > 0} ? text-success : text-danger"/>
+                        <td th:text="${'R$ ' + user.saldo}" th:class="${user.saldo >= 0} ? text-success : text-danger"/>
                         <td th:text="${#temporals.format(user.dataCadastro, 'dd/MM/yyyy HH:mm:ss', new java.util.Locale('pt', 'BR'))}"/>
-                        <td><a href="#">Ver movimentações</a></td>
+                        <td><a th:href="@{/usuarios/{id}(id=${user.id})}">Ver movimentações</a></td>
                     </tr>
                 </tbody>
             </table>

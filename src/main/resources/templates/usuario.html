@@ -22,25 +22,25 @@
             <img th:src="@{/img/dimdim-icon.png}" width="30" height="30">
             DimDim
         </a>
-        <a class="navbar-brand" href="/usuarios">
-            Usuários
-        </a>
+        <a class="navbar-brand" href="/">Home</a>
+        <a class="navbar-brand" href="/usuarios">Usuários</a>
     </nav>
 </header>
 
 <div class="container mt-3">
     <div class="d-flex flex-row">
         <div >
-            <h3 th:text="${user.nome}" class="text-lg-start"></h3>
+            <h1 th:text="${user.nome}" class="text-lg-start"></h1>
             <div class="d-flex flex-row flex-nowrap">
                 <p th:text="${user.email}" class="mr-4"></p>
-                <p th:text="${user.dataCadastro}"></p>
+                <p th:text="${#temporals.format(user.dataCadastro, 'dd/MM/yyyy HH:mm', new java.util.Locale('pt', 'BR'))}"></p>
             </div>
 
         </div>
 
         <div class="ml-4">
-            <h5 th:text="${user.saldo}" th:class="${user.saldo > 0} ? text-success : text-danger"></h5>
+            <h3 class="d-inline">Saldo:</h3>
+            <h5 th:text="${'R$' + user.saldo}" th:class="${user.saldo >= 0} ? text-success : text-danger"></h5>
         </div>
     </div>
 
@@ -77,10 +77,10 @@
         </thead>
         <tbody>
         <tr th:each="movimentacao : ${movimentacoes.content}">
-            <td th:text="${#temporals.format(user.dataCadastro, 'dd/MM/yyyy HH:mm', new java.util.Locale('pt', 'BR'))}"/>
+            <td th:text="${#temporals.format(movimentacao.dataMovimentacao, 'dd/MM/yyyy HH:mm', new java.util.Locale('pt', 'BR'))}"/>
             <td th:text="${movimentacao.descricao}"/>
-            <td th:text="${movimentacao.valor}"
-                th:classappend="${movimentacao.valor > 0} ? text-success : text-danger"/>
+            <td th:text="${'R$ ' + movimentacao.valor}"
+                th:classappend="${movimentacao.valor >= 0} ? text-success : text-danger"/>
         </tr>
         </tbody>
     </table>
