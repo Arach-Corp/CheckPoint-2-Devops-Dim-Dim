@@ -55,12 +55,13 @@ public class UsuarioController {
 
 
     @GetMapping("/{id}")
-    public String profile(@PathVariable Long id, Model model) {
+    public String profile(@PathVariable Long id, @PageableDefault Pageable pageable ,Model model) {
         Usuario usuario = usuarioService.findById(id);
         if (usuario == null){
             return "404";
         }
         model.addAttribute("user", usuario);
+        model.addAttribute("movimentacoes", usuarioService.getAllMovimentacaoByUser(usuario, pageable));
         return "usuario";
     }
 

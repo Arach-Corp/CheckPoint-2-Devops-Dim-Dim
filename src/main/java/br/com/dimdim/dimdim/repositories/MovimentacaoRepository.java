@@ -5,8 +5,9 @@ import br.com.dimdim.dimdim.entities.Usuario;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 public interface MovimentacaoRepository extends JpaRepository<Movimentacao, Long> {
 
-    Page<Movimentacao> findAllByUsuario(Usuario usuario, Pageable pageable);
+    Page<Movimentacao> findAllByUsuarioOrderByDataMovimentacaoDesc(Usuario usuario, Pageable pageable);
 }

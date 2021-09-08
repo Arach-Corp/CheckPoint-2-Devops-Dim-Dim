@@ -18,7 +18,7 @@
 <body>
 <header>
     <nav class="navbar navbar-dark bg-dark">
-        <a class="navbar-brand" href="/home">
+        <a class="navbar-brand" href="/">
             <img th:src="@{/img/dimdim-icon.png}" width="30" height="30">
             DimDim
         </a>
@@ -33,19 +33,21 @@
 
     <table class="table">
         <thead class="thead-dark">
-            <tr><th scope="col" colspan="3" class="text-center">Movimentações</th></tr>
+        <tr>
+            <th scope="col" colspan="3" class="text-center">Movimentações</th>
+        </tr>
             <tr>
                 <th scope="col">Data</th>
                 <th scope="col">Descrição</th>
-                <th scope="col" >Valor</th>
+                <th scope="col">Valor</th>
             </tr>
         </thead>
         <tbody>
-            <tr th:each="movimentacao : ${user.movimentacoes}">
-                <td th:text="${#temporals.format(user.dataCadastro, 'dd/MM/yyyy HH:mm', new java.util.Locale('pt', 'BR'))}"/>
-                <td th:text="${movimentacao.descricao}"/>
-                <td th:text="${movimentacao.valor}" th:class="${movimentacao.valor > 0} ? text-success : text-danger" />
-            </tr>
+        <tr th:each="movimentacao : ${user.movimentacoes}">
+            <td th:text="${#temporals.format(user.dataCadastro, 'dd/MM/yyyy HH:mm', new java.util.Locale('pt', 'BR'))}"/>
+            <td th:text="${movimentacao.descricao}"/>
+            <td th:text="${movimentacao.valor}" th:class="${movimentacao.valor > 0} ? text-success : text-danger"/>
+        </tr>
         </tbody>
     </table>
 
