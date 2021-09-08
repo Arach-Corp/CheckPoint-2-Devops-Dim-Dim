@@ -30,7 +30,7 @@ public class Usuario {
     @Column(name = "ds_password")
     private String password;
 
-    @Column(name = "vl_saldo", precision = 20, scale = 3)
+    @Column(name = "vl_saldo", precision = 20, scale = 2)
     private BigDecimal saldo;
 
     @CreationTimestamp

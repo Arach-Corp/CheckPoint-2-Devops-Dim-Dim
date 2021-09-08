@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -78,13 +79,17 @@ public class UsuarioController {
     }
 
     @PostMapping("/{id}/movimentacoes")
-    public String criarMovimentacao(@PathVariable Long id) {
-        return "usuario";
-    }
+    public String criarMovimentacao(@PathVariable Long id, MovimentacaoForm movimentacaoForm) {
+        Usuario usuario = usuarioService.findById(id);
+        if (Objects.isNull(usuario)){
+            return "404";
+        }
 
-    @GetMapping("/{id}/movimentacoes/{movimentacaoId")
-    public String modificacao(@PathVariable Long id, @PathVariable Long movimentacaoId) {
-        return "usuario";
+        Movimentacao movimentacao = new Movimentacao();
+        movimentacao.setValor(movimentacaoForm.getValor());
+        movimentacao.setDescricao(movimentacaoForm.getDescricao());
+        usuarioService.addMovimentacao(usuario, movimentacao);
+        return "redirect:/usuarios/"+id;
     }
 }
 
