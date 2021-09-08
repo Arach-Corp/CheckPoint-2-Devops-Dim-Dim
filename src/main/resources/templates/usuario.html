@@ -29,52 +29,66 @@
 </header>
 
 <div class="container mt-3">
-    <p th:text="${user.nome}"></p>
-    <p th:text="${user.email}"></p>
-    <p th:text="${user.saldo}" th:class="${user.saldo > 0} ? text-success : text-danger"></p>
-    <p th:text="${user.dataCadastro}"></p>
-
-
-    <hr />
-        <form class="form-inline mb-3"  th:object="${movimentacaoForm}" method="post" th:action="@{/usuarios/{id}/movimentacoes(id=${user.id})}">
-            <label class="sr-only" for="descricao">Descricao</label>
-            <input type="text" class="form-control mb-2 mr-sm-2" id="descricao" name="descricao" placeholder="Descricao" th:field="*{descricao}">
-
-            <label class="sr-only" for="valor">Valor</label>
-            <div class="input-group mb-2 mr-sm-2">
-                <div class="input-group-prepend">
-                    <div class="input-group-text">R$</div>
-                </div>
-                <input type="text" class="form-control" id="valor" name="valor" placeholder="Valor" th:field="*{valor}">
+    <div class="d-flex flex-row">
+        <div >
+            <h3 th:text="${user.nome}" class="text-lg-start"></h3>
+            <div class="d-flex flex-row flex-nowrap">
+                <p th:text="${user.email}" class="mr-4"></p>
+                <p th:text="${user.dataCadastro}"></p>
             </div>
 
-            <button type="submit" class="btn btn-primary mb-2">Submit</button>
-        </form>
-    <hr />
+        </div>
+
+        <div class="ml-4">
+            <h5 th:text="${user.saldo}" th:class="${user.saldo > 0} ? text-success : text-danger"></h5>
+        </div>
+    </div>
+
+
+    <hr/>
+    <form class="form-inline mb-3" th:object="${movimentacaoForm}" method="post"
+          th:action="@{/usuarios/{id}/movimentacoes(id=${user.id})}">
+        <label class="sr-only" for="descricao">Descricao</label>
+        <input type="text" class="form-control mb-2 mr-sm-2" id="descricao" name="descricao" placeholder="Descricao"
+               th:field="*{descricao}">
+
+        <label class="sr-only" for="valor">Valor</label>
+        <div class="input-group mb-2 mr-sm-2">
+            <div class="input-group-prepend">
+                <div class="input-group-text">R$</div>
+            </div>
+            <input type="text" class="form-control" id="valor" name="valor" placeholder="Valor" th:field="*{valor}">
+        </div>
+
+        <button type="submit" class="btn btn-primary mb-2">Submit</button>
+    </form>
+    <hr/>
 
     <table class="table">
         <thead class="thead-dark">
         <tr>
             <th scope="col" colspan="3" class="text-center">Movimentações</th>
         </tr>
-            <tr>
-                <th scope="col">Data</th>
-                <th scope="col">Descrição</th>
-                <th scope="col" class="text-center ">Valor</th>
-            </tr>
+        <tr>
+            <th scope="col">Data</th>
+            <th scope="col">Descrição</th>
+            <th scope="col" class="text-center ">Valor</th>
+        </tr>
         </thead>
         <tbody>
         <tr th:each="movimentacao : ${movimentacoes.content}">
             <td th:text="${#temporals.format(user.dataCadastro, 'dd/MM/yyyy HH:mm', new java.util.Locale('pt', 'BR'))}"/>
             <td th:text="${movimentacao.descricao}"/>
-            <td th:text="${movimentacao.valor}" th:classappend="${movimentacao.valor > 0} ? text-success : text-danger"/>
+            <td th:text="${movimentacao.valor}"
+                th:classappend="${movimentacao.valor > 0} ? text-success : text-danger"/>
         </tr>
         </tbody>
     </table>
     <nav th:if="${movimentacoes.totalPages > 0}">
         <ul class="pagination">
             <li class="page-item" th:each="pageNumber: ${pageNumbers}">
-                <a class="page-link" th:href="@{/usuarios/{id}(id=${user.id},size=${movimentacoes.size}, page=${pageNumber - 1})}"
+                <a class="page-link"
+                   th:href="@{/usuarios/{id}(id=${user.id},size=${movimentacoes.size}, page=${pageNumber - 1})}"
                    th:text=${pageNumber}
                    th:classappend="${pageNumber==movimentacoes.number + 1} ? active"></a>
             </li>
