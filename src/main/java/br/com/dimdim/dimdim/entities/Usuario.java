@@ -52,12 +52,10 @@ public class Usuario {
         if (Objects.nonNull(movimentacao)){
             getMovimentacoes().add(movimentacao);
             movimentacao.setUsuario(this);
-            if (Objects.nonNull(movimentacao.getValor())) {
-                if (Objects.isNull(getSaldo())){
-                    this.saldo = BigDecimal.ZERO;
-                }
-                this.saldo.add(movimentacao.getValor());
+            if (Objects.isNull(getSaldo())){
+                this.saldo = BigDecimal.ZERO;
             }
+            setSaldo(getSaldo().add(movimentacao.getValor()));
         }
     }
 }

@@ -1,6 +1,8 @@
 package br.com.dimdim.dimdim.controller;
 
+import br.com.dimdim.dimdim.controller.dro.MovimentacaoForm;
 import br.com.dimdim.dimdim.controller.dro.RegisterForm;
+import br.com.dimdim.dimdim.entities.Movimentacao;
 import br.com.dimdim.dimdim.entities.Usuario;
 import br.com.dimdim.dimdim.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,8 +62,18 @@ public class UsuarioController {
         if (usuario == null){
             return "404";
         }
+        Page<Movimentacao> movimentacoes = usuarioService.getAllMovimentacaoByUser(usuario, pageable);
+
+        int totalPages = movimentacoes.getTotalPages();
+        if (totalPages > 0){
+            List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
+                    .boxed()
+                    .collect(Collectors.toList());
+            model.addAttribute("pageNumbers", pageNumbers);
+        }
         model.addAttribute("user", usuario);
-        model.addAttribute("movimentacoes", usuarioService.getAllMovimentacaoByUser(usuario, pageable));
+        model.addAttribute("movimentacaoForm", new MovimentacaoForm());
+        model.addAttribute("movimentacoes", movimentacoes);
         return "usuario";
     }
 
