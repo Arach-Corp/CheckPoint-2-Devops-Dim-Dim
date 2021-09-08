@@ -43,7 +43,7 @@
             </tr>
         </thead>
         <tbody>
-        <tr th:each="movimentacao : ${user.movimentacoes}">
+        <tr th:each="movimentacao : ${movimentacoes}">
             <td th:text="${#temporals.format(user.dataCadastro, 'dd/MM/yyyy HH:mm', new java.util.Locale('pt', 'BR'))}"/>
             <td th:text="${movimentacao.descricao}"/>
             <td th:text="${movimentacao.valor}" th:class="${movimentacao.valor > 0} ? text-success : text-danger"/>
